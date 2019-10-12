@@ -105,3 +105,4 @@ venv.bak/
 
 .idea
 __pycache__/
+.DS_Store
