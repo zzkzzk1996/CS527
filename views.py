@@ -4,7 +4,7 @@
 # @FileName: views.py
 # @email    ：zw280@scarletmail.rutgers.edu
 
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, make_response
 from utils import connect_mysql, connect_redshift
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def query_mysql():
                                password='12345678', db='cs527')
     content = connection.run_query(query)
     result = {'result': content}
-    respond = jsonify(result)
+    respond = make_response(jsonify(result), '200')
     connection.disconnect()
     return respond
 
@@ -34,6 +34,11 @@ def query_redshift():
                                   database='dev')
     content = connection.run_query(query)
     result = {'result': content}
-    respond = jsonify(result)
+    respond = make_response(jsonify(result), '200')
     connection.disconnect()
     return respond
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({error: 'page not found'}), 404)
