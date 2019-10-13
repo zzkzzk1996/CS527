@@ -20,8 +20,8 @@ def query_mysql():
     query = request.args.get('query', 'show tables;')
     connection = connect_mysql(host='database-3.c8ainggp8y19.us-east-1.rds.amazonaws.com', user='admin',
                                password='12345678', db='cs527')
-    content = connection.run_query(query)
-    result = {'result': content}
+    content, query_time = connection.run_query(query)
+    result = {'result': content, 'query_time': query_time}
     respond = make_response(jsonify(result), '200')
     connection.disconnect()
     return respond
@@ -32,8 +32,8 @@ def query_redshift():
     query = request.args.get('query', 'show tables;')
     connection = connect_redshift(host='redshift-cluster-1.coed1bpqw3xw.us-east-1.redshift.amazonaws.com',
                                   database='dev')
-    content = connection.run_query(query)
-    result = {'result': content}
+    content, query_time = connection.run_query(query)
+    result = {'result': content, 'query_time': query_time}
     respond = make_response(jsonify(result), '200')
     connection.disconnect()
     return respond
