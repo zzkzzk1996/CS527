@@ -12,10 +12,10 @@ class connect_mysql():
         start_time = int(round(time() * 1000))
         self.cursor.execute(query_statement)
         result = self.cursor.fetchall()
+        query_time = str(int(round(time() * 1000)) - start_time)
         if len(result) > 100000:
             result = result[:9999]
-            result.append(['The result is too larger to transmit, so we limit the size to 10^4'])
-        query_time = int(round(time() * 1000)) - start_time
+            query_time += '\nThe result is too larger to transmit, so we limit the size to 10^4'
         return result, query_time
 
     def disconnect(self):
@@ -31,10 +31,11 @@ class connect_redshift():
         start_time = int(round(time() * 1000))
         self.cur.execute(query_statement)
         result = self.cur.fetchall()
+        query_time = str(int(round(time() * 1000)) - start_time)
         if len(result) > 100000:
             result = result[:9999]
-            result.append(['The result is too larger to transmit, so we limit the size to 10^4'])
-        query_time = int(round(time() * 1000)) - start_time
+            query_time += '\nThe result is too larger to transmit, so we limit the size to 10^4'
+
         return result, query_time
 
     def disconnect(self):
