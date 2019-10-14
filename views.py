@@ -18,8 +18,8 @@ def hello_world():
 @app.route('/mysql', methods=['GET'])
 def query_mysql():
     query = request.args.get('query', 'show tables;')
-    connection = connect_mysql(host='database-3.c8ainggp8y19.us-east-1.rds.amazonaws.com', user='admin',
-                               password='12345678', db='cs527')
+    connection = connect_mysql(host='cs527mysql2.chmrmo5grph7.us-east-1.rds.amazonaws.com', user='Maaaartian',
+                               password='mysqls250+38qqcn', db='test')
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
     respond = make_response(jsonify(result), '200')
@@ -30,8 +30,9 @@ def query_mysql():
 @app.route('/redshift', methods=['GET'])
 def query_redshift():
     query = request.args.get('query', 'show tables;')
-    connection = connect_redshift(host='redshift-cluster-1.coed1bpqw3xw.us-east-1.redshift.amazonaws.com',
-                                  database='dev')
+    connection = connect_redshift(host='cs527redshift.clyua6krsyew.us-east-1.redshift.amazonaws.com', user='maaaartian',
+                                  password='_Sm85823201',
+                                  database='test')
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
     respond = make_response(jsonify(result), '200')
