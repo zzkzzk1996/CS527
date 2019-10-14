@@ -42,46 +42,19 @@
     <script src="/static/js/PIE_IE678.js"></script>
 
     <!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-	<![endif]-->
+            <script src="js/html5shiv.js"></script>
+        <![endif]-->
 
     <script>
         function Reset() {
-            document.getElementById("finish").onclick = function () {
-                location.href = "/";
-            };
+            document.getElementById("finish").addEventListener("click", function () {
+                document.getElementById("reset").click();
+                location.href = "/#contact";
+            });
         }
     </script>
 
-
-    {#    <script type="text/javascript">#}
-    {##}
-    {#        var form = document.getElementById("form1");#}
-    {#        var method = form.elements(0).value;#}
-    {#    alert("Method:" + method);#}
-    {##}
-    {#        var sql = document.getElementById("InputMessage").value;#}
-    {#    alert("password : " + sql);#}
-    {##}
-    {#        xhr = new XMLHttpRequest();#}
-    {#        var url = "/" + method + "/query?" + sql;#}
-    {#        xhr.open("GET", url, true);#}
-    {#        xhr.onreadystatechange = function () {#}
-    {#            if (xhr.readyState == 4 && xhr.status == 200) {#}
-    {#                document.getElementById("result").innerHTML = xhr.responseText;#}
-    {#                console.log(xhr.responseText);#}
-    {#            }#}
-    {#        };#}
-    {#        xhr.send(null);#}
-    {##}
-    {#    </script>#}
-
     <script src="/static/js/myScript.js"></script>
-    {#    <script>#}
-    {#        var m = document.getElementById("mes").value;#}
-    {#        var txt = JSON.parse(m);#}
-    {#        document.getElementById("result").innerHTML = m;#}
-    {#    </script>#}
 </head>
 
 <body id="home">
@@ -104,7 +77,7 @@
     <!-- /.container -->
     <div class="col-xs-12 text-center abcen wow fadeIn">
         <div class="button_down ">
-            <a class="imgcircle wow bounceInUp" data-wow-duration="1.5s" href="#whatis"> <img class="img_scroll"
+            <a class="imgcircle wow bounceInUp" data-wow-duration="1.5s" href="#credits"> <img class="img_scroll"
                                                                                               src="/static/img/icon/circle.png"
                                                                                               alt=""> </a>
         </div>
@@ -161,8 +134,12 @@
                     <div class="form-group text-center">
                         <label for="InputName">Your Choice</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="InputName" id="InputName"
+                            <input type="text" class="form-control" list="InputList" name="InputName" id="InputName"
                                    placeholder="Enter Choice : 'mysql' or 'redshift'" required>
+                            <datalist id="InputList">
+                                <option label="Redshift" value="redshift"/>
+                                <option label="MySQL" value="mysql"/>
+                            </datalist>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
@@ -170,8 +147,8 @@
                     <div class="form-group text-center">
                         <label for="InputMessage">Query Language</label>
                         <div class="input-group ">
-                            <textarea name="InputMessage" id="InputMessage" class="form-control"
-                                      placeholder="SELECT * FROM TABLE" rows="5" required></textarea>
+                                <textarea name="InputMessage" id="InputMessage" class="form-control"
+                                          placeholder="SELECT * FROM TABLE" rows="5" required></textarea>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
@@ -196,16 +173,35 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 wow input-group ">
-                <textarea name="result" id="result" class="form-control" placeholder="SELECT * FROM TABLE"
-                          rows="5" required></textarea>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="form-group text-center">
+                    <label for="result">Result</label>
+                    <div class="input-group">
+                        <textarea name="result" id="result" class="form-control" placeholder="Result"
+                                  rows="10" required></textarea>
+                        <span class="input-group-addon"><i
+                                class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                    </div>
+                </div>
             </div>
-{#            <p hidden id="mes">{{ message }}</p>#}
-{#            <p id="mestest">test</p>#}
-            <button type="button" name="finish" id="finish" value="Finish" onClick="Reset()"
-                    class="btn wow tada btn-embossed btn-primary center-block">Finish
-            </button>
+
+            <div class="col-md-6 col-md-offset-3">
+                <div class="form-group text-center">
+                    <label for="time_elapsed">Time Elapsed</label>
+                    <div class="input-group">
+                        <textarea name="time_elapsed" id="time_elapsed" class="form-control" placeholder="Time Elapsed"
+                                  rows="2" required></textarea>
+                        <span class="input-group-addon"><i
+                                class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-md-offset-3">
+                <button type="button" name="finish" id="finish" onclick="Reset()"
+                        class="btn wow tada btn-embossed btn-primary center-block">Finish
+                </button>
+            </div>
         </div><!-- /.row -->
     </div>
 </div>

@@ -4,16 +4,15 @@ from utils import connect_mysql, connect_redshift
 app = Flask(__name__)
 
 
-@app.route('/mysql', methods=['GET', 'POST'])
+@app.route('/mysql', methods=['GET'])
 def query_mysql():
     query = request.args.get('query', 'show tables;')
     connection = connect_mysql(host='database-3.c8ainggp8y19.us-east-1.rds.amazonaws.com', user='admin',
                                password='12345678', db='cs527')
-    content = connection.run_query(query)
-    result = {'result': content}
-    respond = jsonify(result)
+    content, query_time = connection.run_query(query)
+    result = {'result': content, 'query_time': query_time}
     connection.disconnect()
-    return respond
+    return result
 
 
 @app.route('/redshift', methods=['GET'])
@@ -23,9 +22,7 @@ def query_redshift():
                                   database='dev')
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
-    # respond = jsonify(result)
     connection.disconnect()
-    print('success')
     return result
 
 

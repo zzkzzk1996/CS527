@@ -9,9 +9,11 @@ class connect_mysql():
         self.cursor = self.db.cursor()
 
     def run_query(self, query_statement):
+        start_time = int(round(time() * 1000))
         self.cursor.execute(query_statement)
         result = self.cursor.fetchall()
-        return result
+        query_time = int(round(time() * 1000)) - start_time
+        return result, query_time
 
     def disconnect(self):
         self.db.close()
