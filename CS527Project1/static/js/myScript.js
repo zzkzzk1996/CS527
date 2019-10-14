@@ -5,6 +5,7 @@ function loading() {
     document.getElementById("result").innerHTML = "Loading...";
     document.getElementById("time_elapsed").innerHTML = "Loading...";
 }
+
 function displayData() {
     var method = $("input[id='InputName']").val();
     var sql = $("textarea[id='InputMessage']").val();
@@ -22,12 +23,14 @@ function displayData() {
             for (var o in obj['result']) {
                 data += obj['result'][o] + "\n";
             }
-            var time = JSON.stringify(obj['query_time']);
+            var time = obj['query_time'];
             document.getElementById("result").innerHTML = data;
-            document.getElementById("time_elapsed").innerHTML = time + " ms";
-        } else {
+            document.getElementById("time_elapsed").innerHTML = time;
+        } else if (xmlHttp.readyState == 4) {
             var error = "Wrong Input";
             document.getElementById("result").innerHTML = error;
+            document.getElementById("time_elapsed").innerHTML = error;
+
         }
         console.log(xmlHttp.responseText);
     };
