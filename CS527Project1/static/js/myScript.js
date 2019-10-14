@@ -1,13 +1,18 @@
 var btn = document.getElementById("submit").addEventListener("click", displayData);
 
 // var btn = document.getElementById("submit").onclick = displayData();
-
+function loading() {
+    document.getElementById("result").innerHTML = "Loading...";
+    document.getElementById("time_elapsed").innerHTML = "Loading...";
+}
 function displayData() {
     var method = $("input[id='InputName']").val();
     var sql = $("textarea[id='InputMessage']").val();
     var xmlHttp = new XMLHttpRequest();
     var url = "/" + method + "?query=" + sql;
+
     document.getElementById('whatis').scrollIntoView();
+    loading();
     xmlHttp.open("GET", url, true);
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
