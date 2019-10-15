@@ -15,7 +15,7 @@ class connect_mysql():
         query_time = str(int(round(time() * 1000)) - start_time) + " ms"
         if len(result) > 100000:
             result = result[:9999]
-            query_time += '\nThe result is too larger to transmit, so we limit the size to 10^4'
+            query_time += '\nThe result is too larger to transmit, so we limit the size to return'
         return result, query_time
 
     def disconnect(self):
@@ -34,7 +34,7 @@ class connect_redshift():
         query_time = str(int(round(time() * 1000)) - start_time) + " ms"
         if len(result) > 100000:
             result = result[:9999]
-            query_time += '\nThe result is too larger to transmit, so we limit the size to 10^4'
+            query_time += '\nThe result is too larger to transmit, so we limit the size to return'
 
         return result, query_time
 
