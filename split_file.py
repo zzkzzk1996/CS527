@@ -7,8 +7,8 @@ from datetime import datetime
 
 
 def Main():
-    source_dir = '/Users/ziwan/Documents/Rutgers Course/semester3/DB/Instacart/orders.csv'
-    target_dir = '/Users/ziwan/Documents/Rutgers Course/semester3/DB/Instacart/'
+    source_dir = '/Users/zekunzhang/2019 Fall/CS527/Instacart/orders1.csv'
+    target_dir = '/Users/zekunzhang/2019 Fall/CS527/orders/'
 
     # 计数器
     flag = 0
@@ -26,7 +26,7 @@ def Main():
         for line in f_source:
             flag += 1
             dataList.append(line)
-            if flag == 80000:
+            if flag == 500000:
                 with open(target_dir + "orders" + str(name) + ".csv", 'w+') as f_target:
                     for data in dataList:
                         f_target.write(data)
