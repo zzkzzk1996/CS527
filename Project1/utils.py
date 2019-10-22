@@ -14,7 +14,7 @@ class connect_mysql():
         col_info = self.cursor.description
         result = self.cursor.fetchall()
         query_time = str(int(round(time() * 1000)) - start_time) + " ms"
-        if len(result) > 100:
+        if len(result) > 1000:
             result = result[:99]
             query_time += '\nThe result is too larger to transmit and display, so we limit the size to return'
         col_name = []
@@ -37,7 +37,7 @@ class connect_redshift():
         col_info = self.cur.description
         result = self.cur.fetchall()
         query_time = str(int(round(time() * 1000)) - start_time) + " ms"
-        if len(result) > 100:
+        if len(result) > 1000:
             result = result[:99]
             query_time += '\nThe result is too larger to transmit and display, so we limit the size to return'
         col_name = []
