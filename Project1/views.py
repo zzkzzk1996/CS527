@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify, render_template, redirect, make_response
 from utils import connect_mysql, connect_redshift
 
 app = Flask(__name__)
@@ -7,25 +7,10 @@ app = Flask(__name__)
 @app.route('/mysql', methods=['GET'])
 def query_mysql():
     query = request.args.get('query', 'show tables;')
-    connection = connect_mysql(host='cs527mysql2.chmrmo5grph7.us-east-1.rds.amazonaws.com', user='Maaaartian',
-                               password='mysqls250+38qqcn', db='test')
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+    connection = connect_mysql(host='database-3.c8ainggp8y19.us-east-1.rds.amazonaws.com', user='admin',
+                               password='12345678', db='cs527')
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
-=======
-    col_name, content, query_time = connection.run_query(query)
-    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
->>>>>>> Stashed changes
-=======
-    col_name, content, query_time = connection.run_query(query)
-    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
->>>>>>> Stashed changes
-=======
-    col_name, content, query_time = connection.run_query(query)
-    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
->>>>>>> Stashed changes
     connection.disconnect()
     return result
 
@@ -33,26 +18,10 @@ def query_mysql():
 @app.route('/redshift', methods=['GET'])
 def query_redshift():
     query = request.args.get('query', 'show tables;')
-    connection = connect_redshift(host='cs527redshift.clyua6krsyew.us-east-1.redshift.amazonaws.com', user='group3',
-                                  password='Redshift123',
+    connection = connect_redshift(host='redshift-cluster-1.cxyojdkh3h9f.us-east-1.redshift.amazonaws.com',
                                   database='dev')
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
-=======
-    col_name, content, query_time = connection.run_query(query)
-    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
->>>>>>> Stashed changes
-=======
-    col_name, content, query_time = connection.run_query(query)
-    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
->>>>>>> Stashed changes
-=======
-    col_name, content, query_time = connection.run_query(query)
-    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
->>>>>>> Stashed changes
     connection.disconnect()
     return result
 
