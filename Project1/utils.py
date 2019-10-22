@@ -84,6 +84,12 @@ class connect_mysql():
         for i in range(len(col_info)):
             col_name.append(col_info[i][0])
         return col_name, result, query_time
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
     def disconnect(self):
@@ -124,6 +130,12 @@ class connect_redshift():
         for i in range(len(col_info)):
             col_name.append(col_info[i][0])
         return col_name, result, query_time
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
     def disconnect(self):

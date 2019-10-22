@@ -10,8 +10,18 @@ def query_mysql():
     connection = connect_mysql(host='cs527mysql2.chmrmo5grph7.us-east-1.rds.amazonaws.com', user='Maaaartian',
                                password='mysqls250+38qqcn', db='test')
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
+=======
+    col_name, content, query_time = connection.run_query(query)
+    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
+>>>>>>> Stashed changes
+=======
+    col_name, content, query_time = connection.run_query(query)
+    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
+>>>>>>> Stashed changes
 =======
     col_name, content, query_time = connection.run_query(query)
     result = {'col_name': col_name, 'result': content, 'query_time': query_time}
@@ -27,8 +37,18 @@ def query_redshift():
                                   password='Redshift123',
                                   database='dev')
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
+=======
+    col_name, content, query_time = connection.run_query(query)
+    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
+>>>>>>> Stashed changes
+=======
+    col_name, content, query_time = connection.run_query(query)
+    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
+>>>>>>> Stashed changes
 =======
     col_name, content, query_time = connection.run_query(query)
     result = {'col_name': col_name, 'result': content, 'query_time': query_time}
