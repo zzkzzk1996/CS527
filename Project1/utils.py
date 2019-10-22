@@ -10,6 +10,7 @@ class connect_mysql():
 
     def run_query(self, query_statement):
         start_time = int(round(time() * 1000))
+<<<<<<< Updated upstream
         try:
             self.cursor.execute(query_statement)
             result = self.cursor.fetchall()
@@ -71,6 +72,19 @@ class connect_mysql():
             return 'login sucessful'
         else:
             return 'wrong password'
+=======
+        self.cursor.execute(query_statement)
+        col_info = self.cursor.description
+        result = self.cursor.fetchall()
+        query_time = str(int(round(time() * 1000)) - start_time) + " ms"
+        if len(result) > 100:
+            result = result[:99]
+            query_time += '\nThe result is too larger to transmit and display, so we limit the size to return'
+        col_name = []
+        for i in range(len(col_info)):
+            col_name.append(col_info[i][0])
+        return col_name, result, query_time
+>>>>>>> Stashed changes
 
     def disconnect(self):
         self.cursor.close()
@@ -84,6 +98,7 @@ class connect_redshift():
 
     def run_query(self, query_statement):
         start_time = int(round(time() * 1000))
+<<<<<<< Updated upstream
         try:
             self.cur.execute(query_statement)
             result = self.cur.fetchall()
@@ -97,6 +112,19 @@ class connect_redshift():
             self.con.rollback()
             query_time = str(int(round(time() * 1000)) - start_time) + " ms"
             return "the statement hasn't executed properly!", query_time
+=======
+        self.cur.execute(query_statement)
+        col_info = self.cur.description
+        result = self.cur.fetchall()
+        query_time = str(int(round(time() * 1000)) - start_time) + " ms"
+        if len(result) > 100:
+            result = result[:99]
+            query_time += '\nThe result is too larger to transmit and display, so we limit the size to return'
+        col_name = []
+        for i in range(len(col_info)):
+            col_name.append(col_info[i][0])
+        return col_name, result, query_time
+>>>>>>> Stashed changes
 
     def disconnect(self):
         self.cur.close()

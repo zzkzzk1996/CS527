@@ -9,8 +9,13 @@ def query_mysql():
     query = request.args.get('query', 'show tables;')
     connection = connect_mysql(host='cs527mysql2.chmrmo5grph7.us-east-1.rds.amazonaws.com', user='Maaaartian',
                                password='mysqls250+38qqcn', db='test')
+<<<<<<< Updated upstream
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
+=======
+    col_name, content, query_time = connection.run_query(query)
+    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
+>>>>>>> Stashed changes
     connection.disconnect()
     return result
 
@@ -21,8 +26,13 @@ def query_redshift():
     connection = connect_redshift(host='cs527redshift.clyua6krsyew.us-east-1.redshift.amazonaws.com', user='group3',
                                   password='Redshift123',
                                   database='dev')
+<<<<<<< Updated upstream
     content, query_time = connection.run_query(query)
     result = {'result': content, 'query_time': query_time}
+=======
+    col_name, content, query_time = connection.run_query(query)
+    result = {'col_name': col_name, 'result': content, 'query_time': query_time}
+>>>>>>> Stashed changes
     connection.disconnect()
     return result
 
