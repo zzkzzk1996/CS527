@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
-# @project : HackRU
+# @project : mongoDB
 # @author: Zekun Zhang
 # @contact: zekunzhang.1996@gmail.com
 # @file: csv_to_json.py
-# @time: 2019-11-05 13:29:49
+# @time: 2019-11-04
 import csv
 import json
 
