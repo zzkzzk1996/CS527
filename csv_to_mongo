@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # encoding: utf-8
-# @project : mongoDB
+# @project : MongoDB
 # @author: Zekun Zhang
 # @contact: zekunzhang.1996@gmail.com
 # @file: csv_to_json.py
 # @time: 2019-11-04
 import csv
 import json
+from pymongo import MongoClient
 
 path = '/Users/zekunzhang/2019 Fall/CS527/Instacart/'
 path_write = '/Users/zekunzhang/2019 Fall/CS527/Instacart/'
@@ -19,15 +20,33 @@ col_names = [("aisle_id", "aisle"), ("department_id", "department"),
 
 def csv_reader():
     for file_name, col_name in zip(file_names, col_names):
-        f = open(path + file_name + '.csv', 'rU')
+        f = open(path + file_name + '.csv', 'r', newline='')
         reader = csv.DictReader(f, fieldnames=col_name)
-        print("Read successfully")
+        print(file_name + " Read successfully")
         out = json.dumps([row for row in reader])
-        print("Parse successfully")
-        f = open(path_write + file_name + '.json', 'w')
-        f.write(out)
-        print("Write successfully")
+        print(file_name + " Parse successfully")
+        json_writer(output=out, table_name=file_name)
+        list = json.loads(out)
+        json_uploader(list=list, table_name=file_name)
+
+
+def json_writer(output, table_name):
+    f = open(path_write + table_name + '.json', 'w')
+    f.write(output)
+    print(table_name + " Write successfully")
+
+
+def json_uploader(list, table_name):
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client['instacart']
+    table = db[table_name]
+    table.insert_many(list)
+    print(table_name + " Upload successfully")
+
+
+def main():
+    csv_reader()
 
 
 if __name__ == '__main__':
-    csv_reader()
+    main()
