@@ -72,8 +72,8 @@ def query_mysql():
     query_result = connection.run_query(query)
     connection.disconnect()
     json_array = to_json_array(query_result)
+    json_str = json.dumps(json_array)
     json_uploader(json_array, "new_orders")
-    # json_str = json.dumps(json_array)
     # with open(path + 'new_orders.json', 'w') as f:
     #     f.write(json_str)
 
@@ -82,7 +82,7 @@ def to_json_array(contents):
     list = []
     for content in contents:
         dict = {
-            "user_id": (content[0]),
+            "user_id": content[0],
             "order_id": content[1],
             "order_number": content[2],
             "order_dow": content[3],
