@@ -5,35 +5,54 @@
 # @contact: zekunzhang.1996@gmail.com
 # @file: csv_to_json.py
 # @time: 2019-11-04
+
 import csv
 import json
+import pymysql
 from pymongo import MongoClient
+from bson import ObjectId
 
 path = '/Users/zekunzhang/2019 Fall/CS527/Instacart/'
-path_write = '/Users/zekunzhang/2019 Fall/CS527/Instacart/'
-file_names = ['aisles', 'departments', 'orders', 'products', 'order_products']
-col_names = [("aisle_id", "aisle"), ("department_id", "department"),
-             ("order_id", "user_id", "order_number", "order_dow", "order_hour_of_day", "days_since_prior_order"),
-             ("product_id", "product_name", "aisle_id", "department_id"),
-             ("order_id", "product_id", "add_to_cart_order", "reordered")]
 
 
-def csv_reader():
-    for file_name, col_name in zip(file_names, col_names):
-        f = open(path + file_name + '.csv', 'r', newline='')
-        reader = csv.DictReader(f, fieldnames=col_name)
-        print(file_name + " Read successfully")
-        out = json.dumps([row for row in reader])
-        print(file_name + " Parse successfully")
-        json_writer(output=out, table_name=file_name)
-        list = json.loads(out)
-        json_uploader(list=list, table_name=file_name)
+# path_write = '/Users/zekunzhang/2019 Fall/CS527/Instacart/'
+# file_names = ['aisles', 'departments', 'orders', 'products', 'order_products']
+# col_names = [("aisle_id", "aisle"), ("department_id", "department"),
+#              ("order_id", "user_id", "order_number", "order_dow", "order_hour_of_day", "days_since_prior_order"),
+#              ("product_id", "product_name", "aisle_id", "department_id"),
+#              ("order_id", "product_id", "add_to_cart_order", "reordered")]
 
 
-def json_writer(output, table_name):
-    f = open(path_write + table_name + '.json', 'w')
-    f.write(output)
-    print(table_name + " Write successfully")
+class connect_mysql():
+    def __init__(self, host="localhost", user="myuser", password=None, db="db"):
+        self.db = pymysql.connect(host, user, password, db)
+        self.cursor = self.db.cursor()
+
+    def run_query(self, query_statement):
+        self.cursor.execute(query_statement)
+        result = self.cursor.fetchall()
+        return result
+
+    def disconnect(self):
+        self.db.close()
+
+
+# def csv_reader():
+#     for file_name, col_name in zip(file_names, col_names):
+#         f = open(path + file_name + '.csv', 'r', newline='')
+#         reader = csv.DictReader(f, fieldnames=col_name)
+#         print(file_name + " Read successfully")
+#         out = json.dumps([row for row in reader])  # use json.dumps to change row-str to str
+#         print(file_name + " Parse successfully")
+#         # json_writer(output=out, table_name=file_name)
+#         list = json.loads(out)  # after json.loads, out changed from str to list
+#         json_uploader(list=list[1:], table_name=file_name)  # key point is to ignore headers
+#
+#
+# def json_writer(output, table_name):
+#     f = open(path_write + table_name + '.json', 'w')
+#     f.write(output)
+#     print(table_name + " Write successfully")
 
 
 def json_uploader(list, table_name):
@@ -44,9 +63,43 @@ def json_uploader(list, table_name):
     print(table_name + " Upload successfully")
 
 
-def main():
-    csv_reader()
+def query_mysql():
+    query = "select orders.User_id, order_products.Order_id, orders.Order_number, orders.Order_dow, " \
+            "orders.Days_since_prior_order, order_products.Add_to_cart_order, order_products.Reordered, " \
+            "products.product_name, departments.department, aisles.aisle from products, aisles, departments, orders, order_products where orders.Order_id = order_products.Order_id and order_products.Product_id = products.product_id and products.aisle_id = aisles.aisle_id and products.department_id = departments.department_id;"
+    connection = connect_mysql(host='cs527mysql2.chmrmo5grph7.us-east-1.rds.amazonaws.com', user='Maaaartian',
+                               password='mysqls250+38qqcn', db='test')
+    query_result = connection.run_query(query)
+    connection.disconnect()
+    json_array = to_json_array(query_result)
+    json_uploader(json_array, "new_orders")
+    # json_str = json.dumps(json_array)
+    # with open(path + 'new_orders.json', 'w') as f:
+    #     f.write(json_str)
+
+
+def to_json_array(contents):
+    list = []
+    for content in contents:
+        dict = {
+            "user_id": (content[0]),
+            "order_id": content[1],
+            "order_number": content[2],
+            "order_dow": content[3],
+            "days_since_prior_order": content[4],
+            "add_to_cart_order": content[5],
+            "reordered": content[6],
+            "product_name": content[7],
+            "department": content[8],
+            "aisle": content[9],
+        }
+        list.append(dict)
+    return list
+
+
+# def main():
+#     csv_reader()
 
 
 if __name__ == '__main__':
-    main()
+    query_mysql()
