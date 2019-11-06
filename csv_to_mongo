@@ -26,7 +26,7 @@ path = '/Users/zekunzhang/2019 Fall/CS527/Instacart/'
 class connect_mysql():
     def __init__(self, host="localhost", user="myuser", password=None, db="db"):
         self.db = pymysql.connect(host, user, password, db)
-        self.cursor = self.db.cursor()
+        self.cursor = self.db.cursor(cursor=pymysql.cursors.DictCursor)
 
     def run_query(self, query_statement):
         self.cursor.execute(query_statement)
@@ -67,35 +67,15 @@ def query_mysql():
     query = "select orders.User_id, order_products.Order_id, orders.Order_number, orders.Order_dow, " \
             "orders.Days_since_prior_order, order_products.Add_to_cart_order, order_products.Reordered, " \
             "products.product_name, departments.department, aisles.aisle from products, aisles, departments, orders, order_products where orders.Order_id = order_products.Order_id and order_products.Product_id = products.product_id and products.aisle_id = aisles.aisle_id and products.department_id = departments.department_id;"
+
     connection = connect_mysql(host='cs527mysql2.chmrmo5grph7.us-east-1.rds.amazonaws.com', user='Maaaartian',
                                password='mysqls250+38qqcn', db='test')
     query_result = connection.run_query(query)
     connection.disconnect()
-    json_array = to_json_array(query_result)
-    json_str = json.dumps(json_array)
-    json_uploader(json_array, "new_orders")
+    # json_str = json.dumps(query_result)
     # with open(path + 'new_orders.json', 'w') as f:
     #     f.write(json_str)
-
-
-def to_json_array(contents):
-    list = []
-    for content in contents:
-        dict = {
-            "user_id": content[0],
-            "order_id": content[1],
-            "order_number": content[2],
-            "order_dow": content[3],
-            "days_since_prior_order": content[4],
-            "add_to_cart_order": content[5],
-            "reordered": content[6],
-            "product_name": content[7],
-            "department": content[8],
-            "aisle": content[9],
-        }
-        list.append(dict)
-    return list
-
+    json_uploader(query_result, "new_orders")
 
 # def main():
 #     csv_reader()
