@@ -1,0 +1,6 @@
+﻿{function} {attribute} {attribute} from {table} {where} {target_attr} {operator} {value}
+{function} {attribute} {attribute} {attribute} {attribute} from {table} {where} {target_attr} {operator} {value}
+{function} {attribute} from {table} {where} {target_attr} {operator} {value}
+{function} {attribute} from {table}
+{function} {attribute} {attribute} {attribute} {attribute} from {table}
+{function} {attribute} {attribute} from {table}
