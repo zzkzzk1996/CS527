@@ -7,6 +7,8 @@ function loading() {
 }
 
 function alexaDisplay() {
+    // clearCache();
+    // alert("ok");
     var xmlHttp = new XMLHttpRequest();
     var url = "/getquery";
     document.getElementById('whatis').scrollIntoView();
@@ -110,3 +112,24 @@ function fillTable(data) {
     }
     return row;
 }
+
+// function clearCache() {
+//     var table = document.getElementById("rounded-corner");
+//     var child1 = document.getElementById("tbhead");
+//     var child2 = document.getElementById("tbmain");
+//     table.removeChild(child1);
+//     table.removeChild(child2);
+//     document.getElementById("time_elapsed").innerHTML = "";
+// }
+//
+// function Reset() {
+//     /*
+//     document.getElementById("finish").addEventListener("click", function () {
+//         {#document.getElementById("reset").click();#}
+//         clearCache();
+//         location.href = "/#alexa-content";
+//     });
+//     */
+//     // clearCache();
+//     // location.href = "/#alexa-content";
+// }
