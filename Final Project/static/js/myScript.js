@@ -1,14 +1,11 @@
 var btn = document.getElementById("submit").addEventListener("click", displayData);
 
-// var btn = document.getElementById("submit").onclick = displayData();
 function loading() {
-    // document.getElementById("result").innerHTML = "Loading...";
     document.getElementById("time_elapsed").innerHTML = "Loading...";
 }
 
 function alexaDisplay() {
-    // clearCache();
-    // alert("ok");
+    clearCache();
     var xmlHttp = new XMLHttpRequest();
     var url = "/getquery";
     document.getElementById('whatis').scrollIntoView();
@@ -39,6 +36,7 @@ function alexaDisplay() {
 }
 
 function displayData() {
+    clearCache();
     var method = $("input[id='InputName']").val();
     var sql = $("textarea[id='InputMessage']").val();
     var xmlHttp = new XMLHttpRequest();
@@ -113,23 +111,13 @@ function fillTable(data) {
     return row;
 }
 
-// function clearCache() {
-//     var table = document.getElementById("rounded-corner");
-//     var child1 = document.getElementById("tbhead");
-//     var child2 = document.getElementById("tbmain");
-//     table.removeChild(child1);
-//     table.removeChild(child2);
-//     document.getElementById("time_elapsed").innerHTML = "";
-// }
-//
-// function Reset() {
-//     /*
-//     document.getElementById("finish").addEventListener("click", function () {
-//         {#document.getElementById("reset").click();#}
-//         clearCache();
-//         location.href = "/#alexa-content";
-//     });
-//     */
-//     // clearCache();
-//     // location.href = "/#alexa-content";
-// }
+function clearCache() {
+    var table = document.getElementById("rounded-corner");
+    var child1 = document.getElementById("tbhead");
+    if (child1 != null) {
+        var child2 = document.getElementById("tbmain");
+        table.removeChild(child1);
+        table.removeChild(child2);
+        document.getElementById("time_elapsed").innerHTML = "";
+    }
+}
